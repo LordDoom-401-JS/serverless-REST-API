@@ -3,11 +3,11 @@
 const mug = require('./Models/mug.schema.js');
 
 exports.handler = async (event) => {
-  const id = event.pathParameter.id;
-  const {color, capacity, paperweight} = JSON.parse(event.body);
+  const id = event.pathParameters.id;
+  const {color, capacity, penholder} = JSON.parse(event.body);
   try{
     if(id) {
-      const someMug = new mug({color, capacity, paperweight});
+      const someMug = new mug({id, color, capacity, penholder});
       const vessel = await someMug.save();
       return {
         statusCode: 200,

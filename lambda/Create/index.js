@@ -4,12 +4,12 @@ const uuid = require('uuid').v4;
 const mug = require('./Models/mug.schema.js');
 
 exports.handler = async (event) => {
-  const {capacity, color, paperweight} = JSON.parse(event.body);
+  const {capacity, color, penholder} = JSON.parse(event.body);
 
   const id = uuid();
 // try catch
   try {
-    const record = new mug({ id, capacity, color, paperweight });
+    const record = new mug({ id, capacity, color, penholder });
     const data = await record.save();
 
     return {
