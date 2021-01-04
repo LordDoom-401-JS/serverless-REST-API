@@ -1,22 +1,19 @@
 'use strict';
-
-const mug = require('./Models/mug.schema.js');
-// pulling id from request...
+const mug = require('./Models/mug.schema');
 exports.handler = async (event) => {
+  const id = event.pathParameters.id;
   try {
-    const record = new mug({ id, capacity, color, paperweight });
-    const data = await record.delete();
-
+    const otherMug = await mug.query('id').eq(id).limit(1).exec();
+    console.log(otherMug);
+    await mug.delete();
     return {
-      statusCode: 200,
-      body: JSON.stringify(data)
-    }
-
-  } catch (e) {
+      statusCode : 204,
+      body: JSON.stringify({otherMug}),
+    };
+  } catch (err){
     return {
-      statusCode: 500,
-      response: e.message
-    }
+      statusCode : 500,
+      response: JSON.stringify(err.message),
+    };
   }
-
 };
